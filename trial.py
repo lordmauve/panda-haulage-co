@@ -1,6 +1,7 @@
 import random
 from direct.showbase.ShowBase import ShowBase
 from direct.task import Task
+from panda3d.core import DirectionalLight, VBase4
 
 
 class MyApp(ShowBase):
@@ -16,9 +17,15 @@ class MyApp(ShowBase):
         self.scene.reparentTo(self.render)
 
         # Apply scale and position transforms on the model.
-        self.scene.setScale(*(0.9,) * 3)
+        self.scene.setScale(*(0.8,) * 3)
         self.scene.setPos(4, 0, -1)
         self.scene.setHpr(180,0,0)
+
+        dlight = DirectionalLight('dlight')
+        dlight.setColor(VBase4(1, 1, 1, 1))
+        dlnp = self.render.attachNewNode(dlight)
+        dlnp.setHpr(0, -60, 0)
+        self.render.setLight(dlnp)
 
         self.car_y = 0
         self.zoom = 1.2
