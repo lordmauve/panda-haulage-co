@@ -10,14 +10,14 @@ class MyApp(ShowBase):
         self.lanes = [[] for _ in range(3)]
 
         # Load the environment model.
-        self.scene = self.loader.loadModel("models/environment")
+        self.scene = self.loader.loadModel("world.egg")
 
         # Reparent the model to render.
         self.scene.reparentTo(self.render)
 
         # Apply scale and position transforms on the model.
-        self.scene.setScale(0.25, 0.25, 0.25)
-        self.scene.setPos(-8, 42, -1)
+        self.scene.setScale(*(0.9,) * 3)
+        self.scene.setPos(4, 42, -1)
 
         self.car_y = 0
         self.zoom = 1.2
