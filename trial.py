@@ -1,3 +1,4 @@
+import random
 from direct.showbase.ShowBase import ShowBase
 from direct.task import Task
 
@@ -6,7 +7,7 @@ class MyApp(ShowBase):
 
     def __init__(self):
         ShowBase.__init__(self)
-        self.cars = []
+        self.lanes = [[] for _ in range(3)]
 
         # Load the environment model.
         self.scene = self.loader.loadModel("models/environment")
@@ -30,21 +31,23 @@ class MyApp(ShowBase):
         car = self.loader.loadModel("truck.egg")
         car.reparentTo(self.render)
         car.setHpr(180, 0, 0)
-        car.setPos(0, self.car_y - (10 * len(self.cars) + 50), 0)
-        self.cars.append(car)
+        lane = random.choice(range(3))
+        car.setPos(5 * lane, self.car_y - (8 * len(self.lanes[lane]) + 50), 0)
+        self.lanes[lane].append(car)
 
     def run(self):
         super().run()
 
     def moveCameraTask(self, task):
         self.car_y += 0.01
-        for i, car in enumerate(self.cars):
-            target_y = self.car_y - (10 * i)
-            _, y, _ = car.getPos()
-            car.setPos(0, y * 0.9 + target_y * 0.1, 0)
-        self.camera.setPos(10 * self.zoom, self.car_y - 10 * self.zoom, 15 * self.zoom)
+        for laneno, lane in enumerate(self.lanes):
+            for i, car in enumerate(lane):
+                target_y = self.car_y - (8 * i) + 2 * (hash((i * 997, laneno)) % 100 / 99)
+                _, y, _ = car.getPos()
+                car.setPos(5 * laneno, y * 0.97 + target_y * 0.03, 0)
+        self.camera.setPos(10 * self.zoom, self.car_y - 10 * self.zoom * 1.3, 15 * self.zoom)
         self.camera.setHpr(45, -45, 0)
-        self.zoom += 0.01
+        self.zoom += 0.01 * 0.3
         return Task.cont
 
     def next_car(self, task):
