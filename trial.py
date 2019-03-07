@@ -30,7 +30,7 @@ class MyApp(ShowBase):
         car = self.loader.loadModel("truck.egg")
         car.reparentTo(self.render)
         car.setHpr(180, 0, 0)
-        car.setPos(0, self.car_y - (10 * len(self.cars)), 0)
+        car.setPos(0, self.car_y - (10 * len(self.cars) + 50), 0)
         self.cars.append(car)
 
     def run(self):
@@ -39,14 +39,16 @@ class MyApp(ShowBase):
     def moveCameraTask(self, task):
         self.car_y += 0.01
         for i, car in enumerate(self.cars):
-            car.setPos(0, self.car_y - (10 * i), 0)
+            target_y = self.car_y - (10 * i)
+            _, y, _ = car.getPos()
+            car.setPos(0, y * 0.9 + target_y * 0.1, 0)
         self.camera.setPos(10 * self.zoom, self.car_y - 10 * self.zoom, 15 * self.zoom)
         self.camera.setHpr(45, -45, 0)
+        self.zoom += 0.01
         return Task.cont
 
     def next_car(self, task):
         self.add_car()
-        self.zoom += 1.2
         task.delayTime = 2
         return task.again
 
