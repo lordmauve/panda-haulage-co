@@ -6,12 +6,10 @@ class MyApp(ShowBase):
 
     def __init__(self):
         ShowBase.__init__(self)
+        self.cars = []
 
         # Load the environment model.
         self.scene = self.loader.loadModel("models/environment")
-
-        self.car = self.loader.loadModel("raceCarOrange.egg")
-        self.car.reparentTo(self.render)
 
         # Reparent the model to render.
         self.scene.reparentTo(self.render)
@@ -21,16 +19,25 @@ class MyApp(ShowBase):
         self.scene.setPos(-8, 42, -1)
 
         self.car_y = 0
+        self.zoom = 1.2
 
         self.taskMgr.add(self.moveCameraTask, "moveCamera")
+
+        self.add_car()
+
+    def add_car(self):
+        car = self.loader.loadModel("truck.egg")
+        car.reparentTo(self.render)
+        car.setHpr(180, 0, 0)
+        self.cars.append(car)
 
     def run(self):
         super().run()
 
     def moveCameraTask(self, task):
         self.car_y += 0.01
-        self.car.setPos(0, self.car_y, 0)
-        self.camera.setPos(10, self.car_y - 10, 12)
+        self.cars[0].setPos(0, self.car_y, 0)
+        self.camera.setPos(10 * self.zoom, (self.car_y - 10) * self.zoom, 15 * self.zoom)
         self.camera.setHpr(45, -45, 0)
         return Task.cont
 
