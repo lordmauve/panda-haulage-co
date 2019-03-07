@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/panda-haulage-co.iml
+.idea/modules.xml
+.idea/misc.xml
+.idea/encodings.xml
