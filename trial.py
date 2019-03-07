@@ -17,7 +17,8 @@ class MyApp(ShowBase):
 
         # Apply scale and position transforms on the model.
         self.scene.setScale(*(0.9,) * 3)
-        self.scene.setPos(4, 42, -1)
+        self.scene.setPos(4, 0, -1)
+        self.scene.setHpr(180,0,0)
 
         self.car_y = 0
         self.zoom = 1.2
