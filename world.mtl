@@ -1,4 +1,4 @@
-# Blender MTL File: 'None'
+# Blender MTL File: 'world.blend'
 # Material Count: 5
 
 newmtl Material.002
@@ -10,6 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd back3.png
 
 newmtl Material.003
 Ns 96.078431
@@ -50,3 +51,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd back5.png
